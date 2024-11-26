@@ -154,6 +154,7 @@ while true; do
             ;;
         3)
             # OPERATIONAL
+            echo
             while true; do
                 show_green "------ OPERATIONAL MENU ------ "
                 echo "1. Зaпуск (Start)"
