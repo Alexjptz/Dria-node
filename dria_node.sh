@@ -206,7 +206,7 @@ while true; do
                 case "$option" in
                     yes|y|Y|Yes|YES)
                         process_notification "Останавливаем (Stopping)..."
-                        run_commands "screen -r dria -X quit"
+                        run_commands_info "screen -r dria -X quit"
 
                         process_notification "Чистим (Cleaning)..."
                         run_commands "rm -rvf $HOME/dkn-compute-node"
