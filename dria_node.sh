@@ -132,8 +132,8 @@ while true; do
             echo
             show_blue "YOUR SYSTEM = $(uname -m)"
             echo
-            show_orange "1. x86_64"
-            show_orange "2. ARM/aarch64"
+            show_orange "1. ARM/aarch64"
+            show_orange "2. x86_64"
             echo
             read -p "Выберите опцию (Select option): " option
             case $option in
@@ -167,7 +167,7 @@ while true; do
                     1)
                         process_notification "Запускаем (Starting)..."
                         sleep 2
-                        screen -dmS dria bash -c "cd $HOME/dkn-compute-node && ./dkn-compute-launcher" && screen -r dria
+                        screen -dmS dria bash -c "cd $HOME/dkn-compute-node && exec ./dkn-compute-launcher" && screen -r dria
                         ;;
                     2)
                         process_notification "Останавливаем (Stopping)..."
