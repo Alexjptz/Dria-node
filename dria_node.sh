@@ -150,7 +150,7 @@ while true; do
                         ;;
                     2)
                         # refferals
-                        dkn-compute-launcher refferals
+                        dkn-compute-launcher referrals
                         ;;
                     3)
                         # EXIT
