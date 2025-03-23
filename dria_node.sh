@@ -82,8 +82,6 @@ install_or_update_rust() {
     echo
 }
 
-
-
 print_logo () {
     echo
     show_orange "  _______  .______       __       ___ " && sleep 0.2
@@ -101,10 +99,11 @@ while true; do
     show_green "------ MAIN MENU ------ "
     echo "1. Подготовка (Preparation)"
     echo "2. Установка (Installation)"
-    echo "3. Управление (Operational menu)"
-    echo "4. Логи (Logs)"
-    echo "5. Удаление (Delete)"
-    echo "6. Выход (Exit)"
+    echo "3. Настройка (Tunning)"
+    echo "4. Управление (Operational menu)"
+    echo "5. Логи (Logs)"
+    echo "6. Удаление (Delete)"
+    echo "7. Выход (Exit)"
     echo
     read -p "Выберите опцию (Select option): " option
 
@@ -112,7 +111,7 @@ while true; do
         1)
             # PREPARATION
             process_notification "Начинаем подготовку (Starting preparation)..."
-            run_commands "cd $HOME && sudo apt update && sudo apt upgrade -y && apt install unzip screen"
+            run_commands "cd $HOME && sudo apt update && sudo apt upgrade -y && apt install screen"
 
             process_notification "Проверяем (Cheking) Rust..."
             sleep 2
@@ -130,61 +129,29 @@ while true; do
             # INSTALLATION
             process_notification "Установка (Installation)..."
             echo
-            show_blue "YOUR SYSTEM = $(uname -m)"
-            echo
-            show_orange "1. ARM/aarch64"
-            show_orange "2. x86_64"
-            echo
-            read -p "Выберите опцию (Select option): " option
-            case $option in
-                1)
-                    process_notification "Скачиваем (Downloading)..."
-                    run_commands "curl -L -o dkn-compute-node.zip https://github.com/firstbatchxyz/dkn-compute-launcher/releases/latest/download/dkn-compute-launcher-linux-arm64.zip"
-                    ;;
-                2)
-                    process_notification "Скачиваем (Downloading)..."
-                    run_commands "curl -L -o dkn-compute-node.zip https://github.com/firstbatchxyz/dkn-compute-launcher/releases/latest/download/dkn-compute-launcher-linux-amd64.zip"
-                    ;;
-            esac
-            process_notification "Распаковка (Extracting)..."
-            run_commands "unzip dkn-compute-node.zip && rm dkn-compute-node.zip"
+            run_commands "curl -fsSL https://dria.co/launcher | bash > /dev/null 2>&1"
             echo
             show_green "--- УСТАНОВЛЕНА. INSTALLED ---"
             echo
             ;;
         3)
-            # OPERATIONAL
+            # TUNNING
             echo
             while true; do
-                show_green "------ OPERATIONAL MENU ------ "
-                echo "1. Зaпуск (Start)"
-                echo "2. Остановка (Stop)"
-                echo "3. Сменить модель (Change model)"
-                echo "4. Выход (Exit)"
+                show_green "------ TUNNING MENU ------ "
+                echo "1. Wallet, Port, Models, API"
+                echo "2. Refferal code"
                 echo
-                read -p "Выберите опцию (Select option): " option
+                read -p "Выберете (Choose)..." $option
                 echo
                 case $option in
                     1)
-                        process_notification "Запускаем (Starting)..."
-                        sleep 2
-                        screen -dmS dria bash -c "cd $HOME/dkn-compute-node && exec ./dkn-compute-launcher" && screen -r dria
+                        # Wallet, Port, Models, API
+                        dkn-compute-launcher settings
                         ;;
                     2)
-                        process_notification "Останавливаем (Stopping)..."
-                        run_commands "screen -r dria -X quit"
-                        ;;
-                    3)
-                        # CHANGE MODEL
-                        process_notification "Останавливаем (Stoping)..."
-                        run_commands "screen -r dria -X quit"
-
-                        process_notification "Запускаем (Starting)..."
-                        sleep 1
-                        screen -dmS dria bash -c "cd $HOME/dkn-compute-node && ./dkn-compute-launcher -pick-models" && screen -r dria
-                        ;;
-                    4)
-                        break
+                        # refferals
+                        dkn-compute-launcher refferals
                         ;;
                     *)
                         incorrect_option
@@ -193,11 +160,40 @@ while true; do
             done
             ;;
         4)
+            # OPERATIONAL
+            echo
+            while true; do
+                show_green "------ OPERATIONAL MENU ------ "
+                echo "1. Зaпуск (Start)"
+                echo "2. Остановка (Stop)"
+                echo "3. Выход (Exit)"
+                echo
+                read -p "Выберите опцию (Select option): " option
+                echo
+                case $option in
+                    1)
+                        process_notification "Запускаем (Starting)..."
+                        screen -dmS dria bash -c "cd $HOME/ && dkn-compute-launcher start"
+                        ;;
+                    2)
+                        process_notification "Останавливаем (Stopping)..."
+                        run_commands "screen -r dria -X quit"
+                        ;;
+                    3)
+                        break
+                        ;;
+                    *)
+                        incorrect_option
+                        ;;
+                esac
+            done
+            ;;
+        5)
             # LOGS
             process_notification "Подключаемся (Connecting)..." && sleep 2
             cd $HOME && screen -r dria
             ;;
-        5)
+        6)
             # DELETE
             process_notification "Удаление (Deleting)..."
             echo
@@ -209,8 +205,7 @@ while true; do
                         process_notification "Останавливаем (Stopping)..."
                         run_commands_info "screen -r dria -X quit"
 
-                        process_notification "Чистим (Cleaning)..."
-                        run_commands "rm -rvf $HOME/dkn-compute-node"
+                        run_commands "dkn-compute-launcher uninstall"
 
                         show_green "--- НОДА УДАЛЕНА. NODE DELETED. ---"
                         break
@@ -226,7 +221,7 @@ while true; do
                 esac
             done
             ;;
-        6)
+        7)
             exit_script
             ;;
         *)
@@ -234,6 +229,3 @@ while true; do
             ;;
     esac
 done
-jina_e8f229f0d21a462fbe5e2406a853b040u7j_G1zpkdwfuR3_rharXRzq3aoG
-
-llama3.1:latest
