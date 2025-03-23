@@ -169,20 +169,28 @@ while true; do
                 show_green "------ OPERATIONAL MENU ------ "
                 echo "1. Зaпуск (Start)"
                 echo "2. Остановка (Stop)"
-                echo "3. Выход (Exit)"
+                echo "3. Остановка (Stop)"
+                echo "4. Выход (Exit)"
                 echo
                 read -p "Выберите опцию (Select option): " option
                 echo
                 case $option in
                     1)
+                        # START
                         process_notification "Запускаем (Starting)..."
                         screen -dmS dria bash -c "cd $HOME/ && dkn-compute-launcher start"
                         ;;
                     2)
+                        # STOP
                         process_notification "Останавливаем (Stopping)..."
                         run_commands "screen -r dria -X quit"
                         ;;
                     3)
+                        # UPDATE
+                        cd $HOME/
+                        dkn-compute-launcher update
+                        ;;
+                    4)
                         break
                         ;;
                     *)
