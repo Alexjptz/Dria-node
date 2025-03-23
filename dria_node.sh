@@ -128,9 +128,7 @@ while true; do
         2)
             # INSTALLATION
             process_notification "Установка (Installation)..."
-            echo
             run_commands "curl -fsSL https://dria.co/launcher | bash > /dev/null 2>&1"
-            echo
             show_green "--- УСТАНОВЛЕНА. INSTALLED ---"
             echo
             ;;
@@ -141,8 +139,9 @@ while true; do
                 show_green "------ TUNNING MENU ------ "
                 echo "1. Wallet, Port, Models, API"
                 echo "2. Refferal code"
+                echo "3. Выход (Exit)"
                 echo
-                read -p "Выберете (Choose)..." $option
+                read -p "Выберете (Choose)..." option
                 echo
                 case $option in
                     1)
@@ -152,6 +151,10 @@ while true; do
                     2)
                         # refferals
                         dkn-compute-launcher refferals
+                        ;;
+                    3)
+                        # EXIT
+                        break
                         ;;
                     *)
                         incorrect_option
