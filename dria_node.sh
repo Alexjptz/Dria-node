@@ -169,7 +169,7 @@ while true; do
                 show_green "------ OPERATIONAL MENU ------ "
                 echo "1. Зaпуск (Start)"
                 echo "2. Остановка (Stop)"
-                echo "3. Остановка (Stop)"
+                echo "3. Обновление (Update)"
                 echo "4. Выход (Exit)"
                 echo
                 read -p "Выберите опцию (Select option): " option
