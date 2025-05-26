@@ -178,7 +178,7 @@ while true; do
                     1)
                         # START
                         process_notification "Запускаем (Starting)..."
-                        screen -dmS dria bash -c "cd $HOME/ && dkn-compute-launcher start"
+                        screen -dmS dria bash -c "cd $HOME/ && source .bashrc && dkn-compute-launcher start"
                         ;;
                     2)
                         # STOP
